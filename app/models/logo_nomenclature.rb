@@ -1,0 +1,2 @@
+class LogoNomenclature < ApplicationRecord
+end

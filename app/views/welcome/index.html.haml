@@ -1,0 +1,9 @@
+
+.container
+  .row
+    %h1{class: 'center-align'}= @championnat.name
+
+    = render partial: 'welcome/match', collection: @matches
+
+    %div{class: 'center-align'}
+    = will_paginate @matches, :renderer => PaginationListRenderer, previous_label: 'Précédent', next_label: 'Suivant', style: 'text-align: center'

@@ -1,0 +1,17 @@
+%tr
+  %td= match.matchday
+  %td{class:'valign-wrapper'}
+    %img{src:"#{LogoNomenclature.where(team: match.home_team).first.img}", height: 50, width: 50}
+    %span{class:'valign'}= match.home_team
+  %td{class: (match.home_score.to_s > match.away_score.to_s) ? 'active' : ''}
+    = match.home_score
+  %td{class: (match.away_score.to_s > match.home_score.to_s) ? 'active' : ''}
+    %span{class:'valign'}= match.away_score
+  %td{class:'valign-wrapper'}
+    %img{src:"#{LogoNomenclature.where(team: match.away_team).first.img}", height: 50, width: 50}
+    = match.away_team
+  %td= number_to_percentage(match.home_prevision.to_i * 100, precision: 0)
+  %td= number_to_percentage(match.draw_prevision.to_i * 100, precision: 0)
+  %td= number_to_percentage(match.away_prevision.to_i * 100, precision: 0)
+  %td= link_to content_tag(:i, "mode_edit", class: "material-icons"), edit_match_path(match), class:'btn'
+  %td= link_to content_tag(:i, "delete", class: "material-icons"), match_path(match), method: 'delete', class:'btn red'

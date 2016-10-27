@@ -1,0 +1,24 @@
+.container
+  .row
+    %h1{class: 'center-align'} Ajouter un match
+  .row
+    = simple_form_for @match do |f|
+      .input-field
+        = f.input :matchday
+      .input-field
+        = f.input :home_team
+      .input-field
+        = f.input :home_score
+      .input-field
+        = f.input :home_prevision
+      .input-field
+        = f.input :draw_prevision
+      .input-field
+        = f.input :away_team
+      .input-field
+        = f.input :away_prevision
+      .input-field
+        = f.input :away_score
+        .input-field
+          = f.association :championnat
+        = f.submit :save, class:'btn'

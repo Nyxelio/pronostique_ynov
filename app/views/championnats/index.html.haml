@@ -1,0 +1,21 @@
+.container
+  .row
+    %h1{class: 'center-align'} Liste des championnats
+  .row
+    .row
+    - @championnats.each do |championnat|
+      .col.s12.m6
+        .card
+          .card-content
+            .card-title= link_to championnat.name, championnat_path(championnat)
+            %p= "#{championnat.matches.count} matchs"
+          .card-action
+            = link_to 'Editer', edit_championnat_path(championnat), class:'btn'
+            = link_to 'Supprimer', championnat_path(championnat), method: 'delete', class:'btn'
+
+    #match_per_league{data: {series: Championnat.distribution.to_json}}
+
+
+
+.fixed-action-btn.horizontal.click-to-toggle{style:"bottom: 45px; right: 24px;"}
+  = link_to  content_tag(:i, "add", class: "material-icons"), new_championnat_path, class: 'btn-floating btn-large waves-effect waves-light light-blue'

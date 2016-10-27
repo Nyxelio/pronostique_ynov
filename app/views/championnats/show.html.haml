@@ -1,0 +1,28 @@
+
+.container
+  .row
+    %h1{class: 'center-align'} Liste des matchs
+    %table
+      %thead
+        %tr
+          %th Journée
+          %th Equipe
+          %th Score
+          %th Score
+          %th Equipe
+          %th Prév Victoire
+          %th Prév Nul
+          %th Prév Défaite
+          %th{colpan: 2}
+      %tbody
+        = render @matches
+
+    %div{class: 'center-align'}
+    = will_paginate @matches, :renderer => PaginationListRenderer, previous_label: 'Précédent', next_label: 'Suivant', style: 'text-align: center'
+
+    #total_winners{data: {series: @championnat.winners_distribution.to_json}}
+
+  .fixed-action-btn.horizontal.click-to-toggle{style:"bottom: 45px; right: 24px;"}
+    = link_to  content_tag(:i, "add", class: "material-icons"), new_match_path, class: 'btn-floating btn-large waves-effect waves-light red'
+
+
