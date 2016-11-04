@@ -1,4 +1,9 @@
-#quick and dirty
+require 'csv'
+datas = Rails.root.join('lib','r_engine', 'datas')
+
+matches = []
+matchday = 0
+
 {
     'Bordeaux': "http://medias.lequipe.fr/logo-football/18/300?20161007100454",
     'Lille': "http://medias.lequipe.fr/logo-football/43/300?20161007100454",
@@ -14,37 +19,30 @@
 end
 
 
-teams = %W[Bordeaux Lille Paris-SG Toulouse Lyon Saint-Etienne Monaco Bastia Dijon]
+Dir.glob(datas.join('**')) do |year|
+  datas = CSV.read(year, headers: true)
 
-%W[Ligue\ 1 champions\ League].each do |champ|
+  matches << datas.collect.with_index do |row, i|
 
+    matchday = matchday + 1 if i%10 == 0
 
-  # journées
-  matches = rand(15..20).times.collect.with_index do |_, i|
+    next if row[1].nil?
 
-    rand(5..15).times.collect do
-      home_team = teams.sample
-      away_team = teams.sample
-
-      # not lucky today
-      loop do
-        away_team = teams.sample
-        break unless away_team == home_team
-      end
-
-      {
-          matchday: i,
-          home_team: home_team,
-          home_prevision: rand.to_f.round(2),
-          home_score: i < 5 ? rand(0..5): nil,
-          draw_prevision: rand.to_f.round(2),
-          away_team: away_team,
-          away_prevision: rand.to_f.round(2),
-          away_score: i < 5 ? rand(0..5): nil,
-      }
-    end
-  end.flatten
-
-  Championnat.create!(name: champ, matches_attributes: matches)
+    {
+        matchday: matchday,
+        year: Pathname(year).basename.to_s[0..3],
+        home_team: row[2],
+        home_prevision: nil,
+        home_score: row[4],
+        draw_prevision: nil,
+        away_team: row[3],
+        away_prevision: nil,
+        away_score: row[4],
+    }
+  end
+  matchday = 0
 end
 
+c = Championnat.create!(name: 'Ligue 1', matches_attributes: matches.flatten.compact)
+
+PredictionsJob.new.perform(championship: c)

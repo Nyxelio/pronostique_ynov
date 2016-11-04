@@ -1,9 +1,12 @@
 
 .container
   .row
-    %h1{class: 'center-align'}= @championnat.name
+    %h1{class: 'center-align'}= @matches.present? ? @championnat.name + " " + @matches.first.year.to_s : @championnat.name
+
+  .row
+    = button_to 'Mettre à jour les prédictions', '/predict', remote: true, class: 'btn'
 
     = render partial: 'welcome/match', collection: @matches
 
     %div{class: 'center-align'}
-    = will_paginate @matches, :renderer => PaginationListRenderer, previous_label: 'Précédent', next_label: 'Suivant', style: 'text-align: center'
+    = will_paginate @matches, :renderer => PaginationListRenderer, previous_label: '<<', next_label: '>>', style: 'text-align: center'

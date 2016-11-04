@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :matches
   resources :championnats
+
+  post '/predict', to: 'welcome#predict'
+
   # get 'admin/index'
 
   get 'welcome/index'

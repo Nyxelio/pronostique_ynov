@@ -1,8 +1,8 @@
 
 .row
-  .col.s1= match.matchday
   .col.s3
-    %img{src:"#{LogoNomenclature.where(team: match.home_team).first.img}", height: 50, width: 50}
+    - unless LogoNomenclature.where(team: match.home_team).first.nil?
+      %img{src:"#{LogoNomenclature.where(team: match.home_team).first.img}", height: 50, width: 50}
     %span{class:'valign'}= match.home_team
   - if match.home_score.present? and match.away_score.present?
     .col.s2{class: (match.home_score.to_s > match.away_score.to_s) ? 'active' : ''}
@@ -11,11 +11,12 @@
       %span{class:'valign'}= match.away_score
   - else
     .col.s2
-      %span{class:'valign'}=number_to_percentage(match.home_prevision.to_i * 100, precision: 0)
+      %span{class:'valign'}=number_to_percentage(match.home_prevision * 100, precision: 2)
     .col.s2
-      %span{class:'valign'}=number_to_percentage(match.draw_prevision.to_i * 100, precision: 0)
+      %span{class:'valign'}=number_to_percentage(match.draw_prevision * 100, precision: 2)
     .col.s2
-      %span{class:'valign'}=number_to_percentage(match.away_prevision.to_i * 100, precision: 0)
+      %span{class:'valign'}=number_to_percentage(match.away_prevision * 100, precision: 2)
   .col.s2{class:'valign-wrapper'}
-    %img{src:"#{LogoNomenclature.where(team: match.away_team).first.img}", height: 50, width: 50}
+    - unless LogoNomenclature.where(team: match.away_team).first.nil?
+      %img{src:"#{LogoNomenclature.where(team: match.away_team).first.img}", height: 50, width: 50}
     = match.away_team

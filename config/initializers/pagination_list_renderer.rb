@@ -3,9 +3,9 @@ class PaginationListRenderer < WillPaginate::ActionView::LinkRenderer
 
   def page_number(page)
     unless page == current_page
-      tag(:li, link(page, page, :rel => rel_value(page)))
+      # tag(:li, link(page, page, :rel => rel_value(page)))
     else
-      tag(:li, page, :class => "current")
+      tag(:li, page.to_s + 'ème journée', :class => "current")
     end
   end
 
