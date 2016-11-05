@@ -1,24 +1,9 @@
-# README
+# Pronostique - Ligue 1 [WIP]
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Cette application prédit les chances de victoires de la prochaine journée de Ligue 1.
 
-Things you may want to cover:
+# Stack
+* Ruby on Rails 5
+* Mysql2
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* R
